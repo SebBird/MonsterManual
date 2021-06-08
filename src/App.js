@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "./Components/Button";
+import CurrentMonster from "./Components/CurrentMonster";
 import "./App.css";
 
 function App() {
@@ -23,32 +24,13 @@ function App() {
   };
 
   return (
-    <div>
-      {monster ? (
-        <>
-          <div>
-            <p>Monster: {monster.name}</p>
-            <p>Size: {monster.size}</p>
-            <p>Type: {monster.type.toUpperCase()}</p>
-            <p>Alignment: {monster.alignment}</p>
-            <p>Armor: {monster.armor_class}</p>
-            <p>
-              Hitpoints: {monster.hit_points} ({monster.hit_dice})
-            </p>
-          </div>
-        </>
-      ) : (
-        <>
-          <div>
-            <p>{monsterData.name}</p>
-            <a href={`https://www.dnd5eapi.co${monsterData.url}`}>
-              {monsterData.url ? "Click to view monster" : ""}
-            </a>
-          </div>
-        </>
-      )}
-
+    <div className="mainapp">
+      <div>
+        <h1>Monster Manual</h1>
+        <h2>Dungeons &#38; Dragons 5e</h2>
+      </div>
       <Button wording="Search" func={(search) => fetchMonster(search)} />
+      <CurrentMonster monster={monster} monsterData={monsterData} />
     </div>
   );
 }
