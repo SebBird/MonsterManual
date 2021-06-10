@@ -8,7 +8,7 @@ const MonsterContainer = styled.div`
   margin: 2rem;
 `;
 
-const CurrentMonster = ({ monster, monsterData }) => {
+const CurrentMonster = ({ monster }) => {
   return (
     <div>
       {monster ? (
@@ -29,14 +29,7 @@ const CurrentMonster = ({ monster, monsterData }) => {
           </MonsterContainer>
         </>
       ) : (
-        <>
-          <div>
-            <p>{monsterData.name}</p>
-            <a href={`https://www.dnd5eapi.co${monsterData.url}`}>
-              {monsterData.url ? "Click to view monster" : ""}
-            </a>
-          </div>
-        </>
+        <></>
       )}
     </div>
   );

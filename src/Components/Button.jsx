@@ -5,6 +5,7 @@ import styled from "styled-components";
 const CustomButton = styled.button`
   height: 30px;
   width: 90px;
+  margin: 0.5rem;
   border: none;
   text-decoration: none;
   background: #e8bb41;
