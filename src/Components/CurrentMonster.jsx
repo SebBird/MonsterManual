@@ -8,28 +8,43 @@ const MonsterContainer = styled.div`
   margin: 2rem;
 `;
 
-const CurrentMonster = ({ monster }) => {
+const CurrentMonster = ({ monster, onExpand }) => {
   return (
     <div>
-      {monster ? (
+      {monster && Array.isArray(monster) ? (
         <>
-          <MonsterContainer>
-            <p>
-              {monster.name} -{" "}
-              <i>
-                {`${monster.size.replace(/^\w/, (c) => c.toUpperCase())} `}
-                {monster.type.replace(/^\w/, (c) => c.toUpperCase())}
-              </i>
-            </p>
-            <p>Alignment: {monster.alignment}</p>
-            <p>Armor: {monster.armor_class}</p>
-            <p>
-              Hitpoints: {monster.hit_points} ({monster.hit_dice})
-            </p>
-          </MonsterContainer>
+          <h2>List of monsters (click to view):</h2>
+          {monster.map((mon) => (
+            <MonsterContainer key={mon.name} onClick={() => onExpand(mon)}>
+              <p>{mon.name}</p>
+            </MonsterContainer>
+          ))}
         </>
       ) : (
-        <></>
+        <>
+          {monster ? (
+            <>
+              <h2>Monster:</h2>
+              <MonsterContainer>
+                <p>
+                  {monster.name} -{" "}
+                  <i>
+                    {`${monster.size.replace(/^\w/, (c) => c.toUpperCase())} `}
+                    {monster.type.replace(/^\w/, (c) => c.toUpperCase())}
+                  </i>
+                </p>
+                <p>Alignment: {monster.alignment}</p>
+                <p>Armor: {monster.armor_class}</p>
+                <p>
+                  Hitpoints: {monster.hit_points} ({monster.hit_dice})
+                </p>
+                <p>Challenge Rating: {monster.challenge_rating}</p>
+              </MonsterContainer>
+            </>
+          ) : (
+            <></>
+          )}
+        </>
       )}
     </div>
   );

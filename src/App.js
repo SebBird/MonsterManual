@@ -5,32 +5,37 @@ import "./App.css";
 
 function App() {
   const [monster, updateMonster] = useState("");
+  const [monsterList, updateMonsterList] = useState();
   const [monsterSearch, updateMonsterSearch] = useState();
 
   const fetchMonster = () => {
-    updateMonster("");
     fetch(`https://www.dnd5eapi.co/api/monsters`)
       .then((res) => res.json())
       .then((res) => {
         const results = findMonster(res.results, monsterSearch);
-        fetch(`https://www.dnd5eapi.co${results[0].url}`)
-          /*
-          Currently just displays first result
-          Change this so it displays a list of results, and user can click a monster to
-          get the extended info.
-          This will prevent extensive calls to the API and instead only call it twice.
-          Once initially upon search, then again if the user clicks a monster result.
-        */
-          .then((res) => res.json())
-          .then((res) => {
-            updateMonster(res);
-          });
+
+        if (results.length === 1) {
+          fetch(`https://www.dnd5eapi.co${results[0].url}`)
+            .then((res) => res.json())
+            .then((res) => {
+              updateMonster(res);
+            });
+        } else {
+          updateMonster(results);
+        }
       })
       .catch((e) => console.log("No monster found ", e));
   };
 
+  const expandMonster = (mon) => {
+    fetch(`https://www.dnd5eapi.co${mon.url}`)
+      .then((res) => res.json())
+      .then((res) => {
+        updateMonster(res);
+      });
+  };
+
   const randomMonster = () => {
-    updateMonster("");
     fetch(`https://www.dnd5eapi.co/api/monsters`)
       .then((res) => res.json())
       .then((res) => {
@@ -53,7 +58,14 @@ function App() {
         monsters.push(monsterObj);
     }
     console.log(monsters);
+    updateMonsterList(monsters);
     return monsters;
+  };
+
+  const handleExpand = (monster) => {
+    let newMon = expandMonster(monster);
+    console.log(newMon);
+    updateMonster(newMon);
   };
 
   return (
@@ -77,7 +89,7 @@ function App() {
         <Button wording="Search" func={fetchMonster} />
         <Button wording="Random" func={randomMonster} />
       </form>
-      <CurrentMonster monster={monster} />
+      <CurrentMonster monster={monster} onExpand={handleExpand} />
     </div>
   );
 }
