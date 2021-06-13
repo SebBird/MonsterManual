@@ -51,21 +51,25 @@ function App() {
   };
 
   const findMonster = (result, monsterSearch) => {
-    let monsters = [];
     if (!monsterSearch) return;
+
+    let monsters = [];
+
     for (let monsterObj of result) {
       if (monsterObj.name.toLowerCase().includes(monsterSearch.toLowerCase()))
         monsters.push(monsterObj);
     }
-    console.log(monsters);
     updateMonsterList(monsters);
     return monsters;
   };
 
   const handleExpand = (monster) => {
     let newMon = expandMonster(monster);
-    console.log(newMon);
     updateMonster(newMon);
+  };
+
+  const handleReturn = () => {
+    updateMonster(monsterList);
   };
 
   return (
@@ -84,12 +88,17 @@ function App() {
         <input
           type="text"
           name="monsearch"
-          onChange={(e) => updateMonsterSearch(e.target.value)}
+          onChange={(e) => {
+            updateMonsterSearch(e.target.value);
+            if (!e.target.value){
+              updateMonster("");
+              updateMonsterList("");
+            }}}
         ></input>
         <Button wording="Search" func={fetchMonster} />
         <Button wording="Random" func={randomMonster} />
       </form>
-      <CurrentMonster monster={monster} onExpand={handleExpand} />
+      <CurrentMonster monster={monster} onExpand={handleExpand} onReturn={handleReturn} />
     </div>
   );
 }

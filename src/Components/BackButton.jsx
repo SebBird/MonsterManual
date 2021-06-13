@@ -5,11 +5,14 @@ import Exit from '../Assets/Exit.png'
 const BackBtn = styled.img`
 height: 1rem;
 width: 1rem;
-cursor: pointer;`;
+cursor: pointer;
+&:hover {
+    transform: scale(1.1);
+}`;
 
-const BackButton = () => {
+const BackButton = ({handleChange}) => {
     return ( 
-        <BackBtn src={Exit} alt="" />
+        <BackBtn src={Exit} onClick={handleChange} alt="" />
      );
 }
  
