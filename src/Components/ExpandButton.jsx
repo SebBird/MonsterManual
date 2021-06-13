@@ -5,11 +5,15 @@ import Plus from '../Assets/Plus.png'
 const PlusBtn = styled.img`
 height: 1rem;
 width: 1rem;
-cursor: pointer;`;
+margin: 0 1rem;
+cursor: pointer;
+&:hover {
+    transform: scale(1.1);
+}`;
 
-const ExpandButton = () => {
+const ExpandButton = ({handleChange}) => {
     return ( 
-        <PlusBtn src={Plus} alt="" />
+        <PlusBtn src={Plus} onClick={handleChange} alt="" />
      );
 }
  
