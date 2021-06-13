@@ -52,7 +52,7 @@ function App() {
 
   const findMonster = (result, monsterSearch) => {
     let monsters = [];
-
+    if (!monsterSearch) return;
     for (let monsterObj of result) {
       if (monsterObj.name.toLowerCase().includes(monsterSearch.toLowerCase()))
         monsters.push(monsterObj);
