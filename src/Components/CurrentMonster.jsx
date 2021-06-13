@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import BackButton from './BackButton';
+import ExpandButton from './ExpandButton';
 
 const MonsterContainer = styled.div`
-  background: #e8bb41;
+  background: #f0c775;
+  border: 2px solid #cf9117;
   font-family: "Open Sans", sans-serif;
   padding: 1rem;
   margin: 2rem;
@@ -13,10 +16,11 @@ const CurrentMonster = ({ monster, onExpand }) => {
     <div>
       {monster && Array.isArray(monster) ? (
         <>
-          <h2>List of monsters (click to view):</h2>
+          <h2>List of monsters:</h2>
           {monster.map((mon) => (
-            <MonsterContainer key={mon.name} onClick={() => onExpand(mon)}>
+            <MonsterContainer key={mon.name}>
               <p>{mon.name}</p>
+              <ExpandButton onClick={() => onExpand(mon)}/>
             </MonsterContainer>
           ))}
         </>
@@ -26,6 +30,7 @@ const CurrentMonster = ({ monster, onExpand }) => {
             <>
               <h2>Monster:</h2>
               <MonsterContainer>
+            <BackButton/>
                 <p>
                   {monster.name} -{" "}
                   <i>
