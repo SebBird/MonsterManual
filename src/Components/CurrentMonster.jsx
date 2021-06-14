@@ -27,7 +27,6 @@ const MonsterSingle = styled.div`
 
 const googleImageSearch = (monsterName) => {
   let query = monsterName.replace(" ", "+");
-  console.log(query);
   return `https://www.google.com/search?tbm=isch&q=DnD+${query}`;
 };
 
