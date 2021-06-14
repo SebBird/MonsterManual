@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import BackButton from './BackButton';
-import ExpandButton from './ExpandButton';
+import BackButton from "./BackButton";
+import ExpandButton from "./ExpandButton";
 
 const MonsterContainer = styled.div`
   background: #f0c775;
@@ -12,24 +12,24 @@ const MonsterContainer = styled.div`
 `;
 
 const MonsterList = styled.div`
-display: flex;
-justify-content: flex-end;
-align-items: center;
-flex-direction: row;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: row;
 `;
 
 const MonsterSingle = styled.div`
-display: flex;
-justify-content: flex-end;
-align-items: center;
-flex-direction: column;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const googleImageSearch = (monsterName) => {
-  let query = monsterName.replace(' ', '+');
+  let query = monsterName.replace(" ", "+");
   console.log(query);
   return `https://www.google.com/search?tbm=isch&q=DnD+${query}`;
-}
+};
 
 const CurrentMonster = ({ monster, onExpand, onReturn }) => {
   return (
@@ -41,7 +41,7 @@ const CurrentMonster = ({ monster, onExpand, onReturn }) => {
             <MonsterContainer key={mon.name}>
               <MonsterList>
                 <p>{mon.name}</p>
-                <ExpandButton handleChange={() => onExpand(mon)}/>
+                <ExpandButton handleChange={() => onExpand(mon)} />
               </MonsterList>
             </MonsterContainer>
           ))}
@@ -52,13 +52,14 @@ const CurrentMonster = ({ monster, onExpand, onReturn }) => {
             <>
               <h2>Monster:</h2>
               <MonsterContainer>
-            <MonsterSingle>
-
+                <MonsterSingle>
                   <div>
                     <p>
                       <b>{monster.name}</b> -{" "}
                       <i>
-                        {`${monster.size.replace(/^\w/, (c) => c.toUpperCase())} `}
+                        {`${monster.size.replace(/^\w/, (c) =>
+                          c.toUpperCase()
+                        )} `}
                         {monster.type.replace(/^\w/, (c) => c.toUpperCase())}
                       </i>
                     </p>
@@ -68,10 +69,16 @@ const CurrentMonster = ({ monster, onExpand, onReturn }) => {
                       Hitpoints: {monster.hit_points} ({monster.hit_dice})
                     </p>
                     <p>Challenge Rating: {monster.challenge_rating}</p>
-                    <a href={googleImageSearch(monster.name)} target="_blank">Picture</a>
+                    <a
+                      href={googleImageSearch(monster.name)}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Picture
+                    </a>
                   </div>
-                  <BackButton handleChange={onReturn}/>
-            </MonsterSingle>
+                  <BackButton handleChange={onReturn} />
+                </MonsterSingle>
               </MonsterContainer>
             </>
           ) : (
