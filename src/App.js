@@ -1,13 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "./Components/Button";
 import CurrentMonster from "./Components/CurrentMonster";
 import "./App.css";
 
 function App() {
-  let allMonsters = fetch(`https://www.dnd5eapi.co/api/monsters`).then((res) =>
-    res.json().then((res) => (allMonsters = res))
-  );
-
+  const [allMonsters, updateAllMonsters] = useState();
   const [monster, updateMonster] = useState("");
   const [monsterList, updateMonsterList] = useState();
   const [monsterSearch, updateMonsterSearch] = useState();
@@ -16,12 +13,8 @@ function App() {
     const results = findMonster(allMonsters.results, monsterSearch);
     try {
       if (results.length === 1) {
-        fetch(`https://www.dnd5eapi.co${results[0].url}`)
-          .then((res) => res.json())
-          .then((res) => {
-            updateMonster(res);
-          })
-          .catch((e) => console.log("No monster found ", e));
+        expandMonster(results[0]);
+        fetch(`https://www.dnd5eapi.co${results[0].url}`);
       } else {
         updateMonster(results);
       }
@@ -30,20 +23,16 @@ function App() {
     }
   };
 
-  const expandMonster = (mon) => {
-    fetch(`https://www.dnd5eapi.co${mon.url}`)
+  useEffect(() => {
+    fetch(`https://www.dnd5eapi.co/api/monsters`)
       .then((res) => res.json())
       .then((res) => {
-        updateMonster(res);
+        updateAllMonsters(res);
       });
-  };
+  }, []);
 
-  const randomMonster = () => {
-    const results =
-      allMonsters.results[
-        Math.floor(Math.random() * allMonsters.results.length)
-      ];
-    fetch(`https://www.dnd5eapi.co${results.url}`)
+  const expandMonster = (mon) => {
+    fetch(`https://www.dnd5eapi.co${mon.url}`)
       .then((res) => res.json())
       .then((res) => {
         updateMonster(res);
@@ -51,15 +40,22 @@ function App() {
       .catch((e) => console.log("No monster found ", e));
   };
 
+  const randomMonster = () => {
+    const results =
+      allMonsters.results[
+        Math.floor(Math.random() * allMonsters.results.length)
+      ];
+    expandMonster(results);
+  };
+
   const findMonster = (result, monsterSearch) => {
     if (!monsterSearch) return;
 
     let monsters = [];
-
-    for (let monsterObj of result) {
+    result.forEach((monsterObj) => {
       if (monsterObj.name.toLowerCase().includes(monsterSearch.toLowerCase()))
         monsters.push(monsterObj);
-    }
+    });
     updateMonsterList(monsters);
     return monsters;
   };
