@@ -16,12 +16,7 @@ function App() {
     const results = findMonster(allMonsters.results, monsterSearch);
     try {
       if (results.length === 1) {
-        fetch(`https://www.dnd5eapi.co${results[0].url}`)
-          .then((res) => res.json())
-          .then((res) => {
-            updateMonster(res);
-          })
-          .catch((e) => console.log("No monster found ", e));
+        expandMonster(results[0]);
       } else {
         updateMonster(results);
       }
@@ -52,14 +47,16 @@ function App() {
   };
 
   const findMonster = (result, monsterSearch) => {
-    if (!monsterSearch) return;
+    if (!monsterSearch || !result) return;
 
     let monsters = [];
 
-    for (let monsterObj of result) {
+    console.log(result, monsterSearch);
+    result.forEach((monsterObj) => {
       if (monsterObj.name.toLowerCase().includes(monsterSearch.toLowerCase()))
         monsters.push(monsterObj);
-    }
+    });
+
     updateMonsterList(monsters);
     return monsters;
   };
