@@ -4,27 +4,25 @@ import CurrentMonster from "./Components/CurrentMonster";
 import "./App.css";
 
 function App() {
+  let allMonsters = fetch(`https://www.dnd5eapi.co/api/monsters`).then((res) =>
+    res.json().then((res) => (allMonsters = res))
+  );
+
   const [monster, updateMonster] = useState("");
   const [monsterList, updateMonsterList] = useState();
   const [monsterSearch, updateMonsterSearch] = useState();
 
   const fetchMonster = () => {
-    fetch(`https://www.dnd5eapi.co/api/monsters`)
-      .then((res) => res.json())
-      .then((res) => {
-        const results = findMonster(res.results, monsterSearch);
-
-        if (results.length === 1) {
-          fetch(`https://www.dnd5eapi.co${results[0].url}`)
-            .then((res) => res.json())
-            .then((res) => {
-              updateMonster(res);
-            });
-        } else {
-          updateMonster(results);
-        }
-      })
-      .catch((e) => console.log("No monster found ", e));
+    const results = findMonster(allMonsters.results, monsterSearch);
+    try {
+      if (results.length === 1) {
+        expandMonster(results[0]);
+      } else {
+        updateMonster(results);
+      }
+    } catch (err) {
+      console.log("Error: No search term found");
+    }
   };
 
   const expandMonster = (mon) => {
@@ -36,36 +34,39 @@ function App() {
   };
 
   const randomMonster = () => {
-    fetch(`https://www.dnd5eapi.co/api/monsters`)
+    const results =
+      allMonsters.results[
+        Math.floor(Math.random() * allMonsters.results.length)
+      ];
+    fetch(`https://www.dnd5eapi.co${results.url}`)
       .then((res) => res.json())
       .then((res) => {
-        const results =
-          res.results[Math.floor(Math.random() * res.results.length)];
-        fetch(`https://www.dnd5eapi.co${results.url}`)
-          .then((res) => res.json())
-          .then((res) => {
-            updateMonster(res);
-          });
+        updateMonster(res);
       })
       .catch((e) => console.log("No monster found ", e));
   };
 
   const findMonster = (result, monsterSearch) => {
+    if (!monsterSearch || !result) return;
+
     let monsters = [];
 
-    for (let monsterObj of result) {
+    result.forEach((monsterObj) => {
       if (monsterObj.name.toLowerCase().includes(monsterSearch.toLowerCase()))
         monsters.push(monsterObj);
-    }
-    console.log(monsters);
+    });
+
     updateMonsterList(monsters);
     return monsters;
   };
 
   const handleExpand = (monster) => {
     let newMon = expandMonster(monster);
-    console.log(newMon);
     updateMonster(newMon);
+  };
+
+  const handleReturn = () => {
+    updateMonster(monsterList);
   };
 
   return (
@@ -84,12 +85,22 @@ function App() {
         <input
           type="text"
           name="monsearch"
-          onChange={(e) => updateMonsterSearch(e.target.value)}
+          onChange={(e) => {
+            updateMonsterSearch(e.target.value);
+            if (!e.target.value) {
+              updateMonster("");
+              updateMonsterList("");
+            }
+          }}
         ></input>
         <Button wording="Search" func={fetchMonster} />
         <Button wording="Random" func={randomMonster} />
       </form>
-      <CurrentMonster monster={monster} onExpand={handleExpand} />
+      <CurrentMonster
+        monster={monster}
+        onExpand={handleExpand}
+        onReturn={handleReturn}
+      />
     </div>
   );
 }
