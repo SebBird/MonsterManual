@@ -6,6 +6,7 @@ import ExpandButton from "./ExpandButton";
 const MonsterContainer = styled.div`
   background: #f0c775;
   border: 2px solid #cf9117;
+  border-radius: 6px;
   font-family: "Open Sans", sans-serif;
   padding: 1rem;
   margin: 2rem;
@@ -16,6 +17,9 @@ const MonsterList = styled.div`
   justify-content: flex-end;
   align-items: center;
   flex-direction: row;
+  > p {
+    margin: 0;
+  }
 `;
 
 const MonsterSingle = styled.div`
