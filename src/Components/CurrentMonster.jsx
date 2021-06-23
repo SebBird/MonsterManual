@@ -43,7 +43,9 @@ const CurrentMonster = ({ monster, onExpand, onReturn }) => {
           {monster.map((mon) => (
             <MonsterContainer key={mon.name}>
               <MonsterList>
-                <p>{mon.name}</p>
+                <p>
+                  <b>{mon.name}</b>
+                </p>
                 <ExpandButton handleChange={() => onExpand(mon)} />
               </MonsterList>
             </MonsterContainer>

@@ -10,20 +10,6 @@ function App() {
   const [monsterList, updateMonsterList] = useState();
   const [monsterSearch, updateMonsterSearch] = useState();
 
-  const fetchMonster = () => {
-    const results = findMonster(allMonsters.results, monsterSearch);
-    try {
-      if (results.length === 1) {
-        expandMonster(results[0]);
-        fetch(`https://www.dnd5eapi.co${results[0].url}`);
-      } else {
-        updateMonster(results);
-      }
-    } catch (err) {
-      console.log("Error: No search term found");
-    }
-  };
-
   useEffect(() => {
     fetch(`https://www.dnd5eapi.co/api/monsters`)
       .then((res) => res.json())
@@ -31,6 +17,15 @@ function App() {
         updateAllMonsters(res);
       });
   }, []);
+
+  const fetchMonster = () => {
+    const results = findMonster(allMonsters.results, monsterSearch);
+    try {
+      results.length === 1 ? expandMonster(results[0]) : updateMonster(results);
+    } catch (err) {
+      console.log("Error: No search term found");
+    }
+  };
 
   const expandMonster = (mon) => {
     fetch(`https://www.dnd5eapi.co${mon.url}`)
@@ -50,7 +45,7 @@ function App() {
   };
 
   const findMonster = (result, monsterSearch) => {
-    if (!monsterSearch) return;
+    if (!monsterSearch || !result) return;
 
     let monsters = [];
     result.forEach((monsterObj) => {
@@ -72,13 +67,14 @@ function App() {
 
   return (
     <div className="mainapp">
-      <Header/>
-      <SearchBar 
+      <Header />
+      <SearchBar
         fetchMonster={fetchMonster}
         randomMonster={randomMonster}
         updateMonsterSearch={updateMonsterSearch}
         updateMonster={updateMonster}
-        updateMonsterList={updateMonsterList} />
+        updateMonsterList={updateMonsterList}
+      />
       <CurrentMonster
         monster={monster}
         onExpand={handleExpand}
