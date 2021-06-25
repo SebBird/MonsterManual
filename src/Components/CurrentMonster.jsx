@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import BackButton from "./BackButton";
 import ExpandButton from "./ExpandButton";
+import Button from "./Button";
 
 const MonsterContainer = styled.div`
   background: #f0c775;
@@ -34,12 +35,20 @@ const googleImageSearch = (monsterName) => {
   return `https://www.google.com/search?tbm=isch&q=DnD+${query}`;
 };
 
-const CurrentMonster = ({ monster, onExpand, onReturn }) => {
+const CurrentMonster = ({
+  monster,
+  onExpand,
+  onReturn,
+  previousPage,
+  nextPage,
+}) => {
   return (
     <div>
       {monster && Array.isArray(monster) ? (
         <>
           <h2>List of monsters:</h2>
+          <Button wording={"Previous"} func={previousPage} />
+          <Button wording={"Next"} func={nextPage} />
           {monster.map((mon) => (
             <MonsterContainer key={mon.name}>
               <MonsterList>
