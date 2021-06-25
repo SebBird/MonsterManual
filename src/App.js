@@ -80,16 +80,13 @@ function App() {
   };
 
   const handleExpand = (monster) => {
-    let newMon = expandMonster(monster);
-    updateMonster(newMon);
+    updateMonster(expandMonster(monster));
   };
 
   const handleReturn = () => {
-    if (Array.isArray(monsterList[0])) {
-      updateMonster(monsterList[currentPage - 1]);
-      return;
-    }
-    updateMonster(monsterList);
+    Array.isArray(monsterList[0])
+      ? updateMonster(monsterList[currentPage - 1])
+      : updateMonster(monsterList);
   };
 
   const previousPage = () => {
