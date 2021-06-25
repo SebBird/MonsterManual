@@ -4,6 +4,16 @@ import BackButton from "./BackButton";
 import ExpandButton from "./ExpandButton";
 import Button from "./Button";
 
+const PageNav = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  > p {
+    margin: 0;
+  }
+`;
+
 const MonsterContainer = styled.div`
   background: #f0c775;
   border: 2px solid #cf9117;
@@ -37,18 +47,27 @@ const googleImageSearch = (monsterName) => {
 
 const CurrentMonster = ({
   monster,
+  monsterList,
   onExpand,
   onReturn,
   previousPage,
   nextPage,
+  currentPage,
 }) => {
   return (
     <div>
       {monster && Array.isArray(monster) ? (
         <>
           <h2>List of monsters:</h2>
-          <Button wording={"Previous"} func={previousPage} />
-          <Button wording={"Next"} func={nextPage} />
+          <PageNav>
+            <p>
+              Current page: {currentPage} of {monsterList.length}
+            </p>
+            <div>
+              <Button wording={"Previous"} func={previousPage} />
+              <Button wording={"Next"} func={nextPage} />
+            </div>
+          </PageNav>
           {monster.map((mon) => (
             <MonsterContainer key={mon.name}>
               <MonsterList>

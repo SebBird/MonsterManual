@@ -79,10 +79,6 @@ function App() {
     return monsters;
   };
 
-  const handleExpand = (monster) => {
-    updateMonster(expandMonster(monster));
-  };
-
   const handleReturn = () => {
     Array.isArray(monsterList[0])
       ? updateMonster(monsterList[currentPage - 1])
@@ -121,10 +117,12 @@ function App() {
       />
       <CurrentMonster
         monster={monster}
-        onExpand={handleExpand}
+        monsterList={monsterList}
+        onExpand={expandMonster}
         onReturn={handleReturn}
         previousPage={previousPage}
         nextPage={nextPage}
+        currentPage={currentPage}
       />
     </div>
   );
