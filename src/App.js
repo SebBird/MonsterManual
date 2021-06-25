@@ -79,17 +79,10 @@ function App() {
     return monsters;
   };
 
-  const handleExpand = (monster) => {
-    let newMon = expandMonster(monster);
-    updateMonster(newMon);
-  };
-
   const handleReturn = () => {
-    if (Array.isArray(monsterList[0])) {
-      updateMonster(monsterList[currentPage - 1]);
-      return;
-    }
-    updateMonster(monsterList);
+    Array.isArray(monsterList[0])
+      ? updateMonster(monsterList[currentPage - 1])
+      : updateMonster(monsterList);
   };
 
   const previousPage = () => {
@@ -124,10 +117,12 @@ function App() {
       />
       <CurrentMonster
         monster={monster}
-        onExpand={handleExpand}
+        monsterList={monsterList}
+        onExpand={expandMonster}
         onReturn={handleReturn}
         previousPage={previousPage}
         nextPage={nextPage}
+        currentPage={currentPage}
       />
     </div>
   );
