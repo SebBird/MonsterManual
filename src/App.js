@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import HeaderNav from "./Components/HeaderNav";
-import Header from "./Components/Header";
-import SearchBar from "./Components/SearchBar";
 import CurrentMonster from "./Components/CurrentMonster";
 import "./App.css";
 
