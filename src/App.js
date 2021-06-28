@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "./Components/Header";
-import SearchBar from "./Components/SearchBar";
+import HeaderNav from "./Components/HeaderNav";
 import CurrentMonster from "./Components/CurrentMonster";
 import "./App.css";
 
@@ -107,8 +106,7 @@ function App() {
 
   return (
     <div className="mainapp">
-      <Header />
-      <SearchBar
+      <HeaderNav
         fetchMonster={fetchMonster}
         randomMonster={randomMonster}
         updateMonsterSearch={updateMonsterSearch}
