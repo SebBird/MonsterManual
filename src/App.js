@@ -70,6 +70,7 @@ function App() {
         Math.floor(Math.random() * allMonsters.results.length)
       ];
     expandMonster(results);
+    updateMonsterList("");
   };
 
   const findMonster = (result, monsterSearch) => {
