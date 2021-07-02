@@ -46,7 +46,13 @@ function App() {
     }
 
     updateMonsterList(pages);
-    updateMonster(pages[currentPage - 1]);
+    updateMonster(pages[0]);
+  };
+
+  const resetPage = () => {
+    updateMonster("");
+    updateMonsterList("");
+    updateCurrentPage(1);
   };
 
   const expandMonster = (mon) => {
@@ -68,7 +74,6 @@ function App() {
 
   const findMonster = (result, monsterSearch) => {
     if (!monsterSearch || !result) return;
-
     let monsters = [];
     result.forEach((monsterObj) => {
       if (monsterObj.name.toLowerCase().includes(monsterSearch.toLowerCase()))
@@ -84,18 +89,17 @@ function App() {
       : updateMonster(monsterList);
   };
 
-  const previousPage = () => {
-    let newPage = currentPage - 1;
+  const changePage = (operator) => {
+    if (operator === "-") {
+      let newPage = currentPage - 1;
 
-    if (newPage < 1) return;
+      if (newPage < 1) return;
 
-    updateCurrentPage(newPage);
-    updateMonster(monsterList[newPage - 1]);
-  };
+      updateCurrentPage(newPage);
+      updateMonster(monsterList[newPage - 1]);
+      return;
+    }
 
-  //Combine these into a new function, to prevent repetition
-
-  const nextPage = () => {
     let newPage = currentPage + 1;
 
     if (newPage > monsterList.length) return;
@@ -107,19 +111,20 @@ function App() {
   return (
     <div className="mainapp">
       <HeaderNav
-        fetchMonster={fetchMonster}
+        fetchMonster={() => {
+          resetPage();
+          fetchMonster();
+        }}
         randomMonster={randomMonster}
         updateMonsterSearch={updateMonsterSearch}
-        updateMonster={updateMonster}
-        updateMonsterList={updateMonsterList}
+        resetPage={resetPage}
       />
       <CurrentMonster
         monster={monster}
         monsterList={monsterList}
         onExpand={expandMonster}
         onReturn={handleReturn}
-        previousPage={previousPage}
-        nextPage={nextPage}
+        changePage={changePage}
         currentPage={currentPage}
       />
     </div>

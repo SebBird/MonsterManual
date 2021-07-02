@@ -20,8 +20,7 @@ const HeaderNav = ({
   fetchMonster,
   randomMonster,
   updateMonsterSearch,
-  updateMonster,
-  updateMonsterList,
+  resetPage,
 }) => {
   return (
     <HeaderDiv>
@@ -30,8 +29,7 @@ const HeaderNav = ({
         fetchMonster={fetchMonster}
         randomMonster={randomMonster}
         updateMonsterSearch={updateMonsterSearch}
-        updateMonster={updateMonster}
-        updateMonsterList={updateMonsterList}
+        resetPage={resetPage}
       />
     </HeaderDiv>
   );
