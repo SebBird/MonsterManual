@@ -26,8 +26,7 @@ const SearchBar = ({
   fetchMonster,
   randomMonster,
   updateMonsterSearch,
-  updateMonster,
-  updateMonsterList,
+  resetPage,
 }) => {
   const inputRef = useRef("searchBar");
 
@@ -47,8 +46,7 @@ const SearchBar = ({
           onChange={(e) => {
             updateMonsterSearch(e.target.value);
             if (!e.target.value) {
-              updateMonster("");
-              updateMonsterList("");
+              resetPage();
             }
           }}
         ></Input>
@@ -58,8 +56,7 @@ const SearchBar = ({
             wording="Clear"
             func={() => {
               document.querySelector("input").value = "";
-              updateMonsterSearch("");
-              updateMonster("");
+              resetPage();
             }}
           />
           <Button wording="Random" func={randomMonster} />

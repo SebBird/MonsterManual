@@ -50,8 +50,7 @@ const CurrentMonster = ({
   monsterList,
   onExpand,
   onReturn,
-  previousPage,
-  nextPage,
+  changePage,
   currentPage,
 }) => {
   return (
@@ -64,8 +63,8 @@ const CurrentMonster = ({
               Current page: {currentPage} of {monsterList.length}
             </p>
             <div>
-              <Button wording={"Previous"} func={previousPage} />
-              <Button wording={"Next"} func={nextPage} />
+              <Button wording={"Previous"} func={() => changePage("-")} />
+              <Button wording={"Next"} func={() => changePage("+")} />
             </div>
           </PageNav>
           {monster.map((mon) => (
