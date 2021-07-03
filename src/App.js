@@ -119,6 +119,7 @@ function App() {
         randomMonster={randomMonster}
         updateMonsterSearch={updateMonsterSearch}
         resetPage={resetPage}
+        monster={monster}
       />
       <CurrentMonster
         monster={monster}

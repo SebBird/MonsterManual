@@ -15,6 +15,7 @@ const PageNav = styled.div`
 `;
 
 const MonsterContainer = styled.div`
+  box-shadow: 0 0 5px 3px #cccccc;
   background: #f0c775;
   border: 2px solid #cf9117;
   border-radius: 6px;
