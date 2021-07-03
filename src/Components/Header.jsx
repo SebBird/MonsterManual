@@ -7,8 +7,10 @@ const HeaderDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  padding: 1rem;
   @media (max-width: 768px) {
     font-size: 0.75rem;
+    padding: 0;
   } ;
 `;
 

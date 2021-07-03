@@ -7,18 +7,21 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding: ${(props) => (props.monster ? "0" : "0 0 4rem 0")};
+  transition: padding 0.8s;
   @media (max-width: 768px) {
     flex-direction: column;
   } ;
 `;
 
 const Label = styled.label`
+  font-weight: 500;
   padding: 0 0.5rem;
 `;
 
 const Input = styled.input`
   border-radius: 5px;
-  padding: 0.2rem;
+  padding: 0.3rem;
   outline: none;
 `;
 
@@ -27,6 +30,7 @@ const SearchBar = ({
   randomMonster,
   updateMonsterSearch,
   resetPage,
+  monster,
 }) => {
   const inputRef = useRef("searchBar");
 
@@ -37,7 +41,7 @@ const SearchBar = ({
         fetchMonster();
       }}
     >
-      <Container>
+      <Container monster={monster}>
         <Label htmlFor="monsearch">Search for a monster:</Label>
         <Input
           type="text"
