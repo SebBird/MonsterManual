@@ -14,9 +14,17 @@ const HeaderDiv = styled.div`
   } ;
 `;
 
+const H1 = styled.h1`
+font-size: 1.2rem;
+margin: 0;
+`;
+const H2 = styled.h1`
+font-size: 1rem;
+margin: 0;
+`;
+
 const Image = styled.img`
   width: 15%;
-  padding: 0 0 0.5rem 0;
 `;
 
 const Header = () => {
@@ -24,8 +32,8 @@ const Header = () => {
     <HeaderDiv>
       <Image src={DragonLeft} alt="" />
       <div>
-        <h1>Monster Manual</h1>
-        <h2>Dungeons &#38; Dragons 5e</h2>
+        <H1>Monster Manual</H1>
+        <H2>Dungeons &#38; Dragons 5e</H2>
       </div>
       <Image src={DragonRight} alt="" />
     </HeaderDiv>
