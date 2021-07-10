@@ -12,8 +12,9 @@ const HeaderDiv = styled.div`
   flex-direction: column;
   padding: 0 0 5px 0;
   transition: height 0.8s;
-  border-bottom: 3px solid black;
-  background-color: #fff4de;
+  border-bottom: ${(props) =>
+    props.monster ? "3px solid black" : "3px solid #fff4de"};
+  background-color: #ffdc99;
   @media (max-width: 768px) {
     height: ${(props) => (props.monster ? "30vh" : "100vh")};
   } ;
