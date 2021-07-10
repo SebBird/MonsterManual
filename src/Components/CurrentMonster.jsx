@@ -3,6 +3,7 @@ import styled from "styled-components";
 import BackButton from "./BackButton";
 import ExpandButton from "./ExpandButton";
 import Button from "./Button";
+import Shield from "../Assets/Shield.svg";
 
 const PageNav = styled.div`
   display: flex;
@@ -22,6 +23,7 @@ const MonsterContainer = styled.div`
   font-family: "Open Sans", sans-serif;
   padding: 1rem;
   margin: 2rem;
+  transition: all 0.5s;
 `;
 
 const MonsterList = styled.div`
@@ -41,9 +43,74 @@ const MonsterSingle = styled.div`
   flex-direction: column;
 `;
 
+const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MonsterName = styled.h2`
+  margin: 0;
+`;
+
+const IconInfo = styled.div`
+  height: 40px;
+  text-align: center;
+  > p {
+    margin: 0;
+    font-weight: 8000;
+    position: relative;
+    bottom: 37px;
+  }
+`;
+
+const MonsterIcon = styled.img`
+  height: 40px;
+  width: 40px;
+`;
+
+const StatBlocks = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0.5rem;
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
+`;
+
+const Stats = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 75px;
+  margin: 1rem 0.5rem;
+  padding: 0.1rem;
+  border: 2px solid #cf9117;
+  border-radius: 5px;
+  background: #ffd27a;
+  > p {
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    margin: 0.2rem 0.5rem;
+  }
+`;
+
 const googleImageSearch = (monsterName) => {
   let query = monsterName.replace(" ", "+");
-  return `https://www.google.com/search?tbm=isch&q=DnD+${query}`;
+  return `https://www.google.com/search?tbm=isch&q=D%26D+${query}`;
+};
+
+const capitaliseFirst = (word) => {
+  return word.replace(/^\w/, (c) => c.toUpperCase());
+};
+
+const calculateModifier = (stat) => {
+  let modifier = Math.floor(stat / 2 - 5);
+
+  return modifier > -1 ? `+${modifier}` : modifier;
 };
 
 const CurrentMonster = ({
@@ -57,6 +124,7 @@ const CurrentMonster = ({
   return (
     <div>
       {monster && Array.isArray(monster) ? (
+        //List of monsters
         <>
           <h2>List of monsters:</h2>
           <PageNav>
@@ -80,27 +148,33 @@ const CurrentMonster = ({
           ))}
         </>
       ) : (
+        //Single monster
         <>
           {monster ? (
             <>
               <h2>Monster:</h2>
               <MonsterContainer>
+                <Title>
+                  <MonsterName>{monster.name}</MonsterName>
+                  <IconInfo>
+                    <MonsterIcon src={Shield} />
+                    <p>{monster.armor_class}</p>
+                  </IconInfo>
+                </Title>
+
                 <MonsterSingle>
                   <div>
                     <p>
-                      <b>{monster.name}</b> -{" "}
                       <i>
-                        {`${monster.size.replace(/^\w/, (c) =>
-                          c.toUpperCase()
-                        )} `}
-                        {monster.type.replace(/^\w/, (c) => c.toUpperCase())}
+                        {`${capitaliseFirst(monster.size)} `}
+                        {capitaliseFirst(monster.type)},{" "}
+                        {capitaliseFirst(monster.alignment)}
                       </i>
                     </p>
-                    <p>Alignment: {monster.alignment}</p>
-                    <p>Armor: {monster.armor_class}</p>
                     <p>
                       Hitpoints: {monster.hit_points} ({monster.hit_dice})
                     </p>
+                    <p>Speed: {monster.speed.walk}</p>
                     <p>Challenge Rating: {monster.challenge_rating}</p>
                     <a
                       href={googleImageSearch(monster.name)}
@@ -109,6 +183,49 @@ const CurrentMonster = ({
                     >
                       Picture
                     </a>
+                    <StatBlocks>
+                      <Stats>
+                        <p>STR:</p>
+                        <p>
+                          {monster.strength} (
+                          {calculateModifier(monster.strength)})
+                        </p>
+                      </Stats>
+                      <Stats>
+                        <p>DEX:</p>
+                        <p>
+                          {monster.dexterity} (
+                          {calculateModifier(monster.dexterity)})
+                        </p>
+                      </Stats>
+                      <Stats>
+                        <p>CON:</p>
+                        <p>
+                          {monster.constitution} (
+                          {calculateModifier(monster.constitution)})
+                        </p>
+                      </Stats>
+                      <Stats>
+                        <p>INT:</p>
+                        <p>
+                          {monster.intelligence} (
+                          {calculateModifier(monster.intelligence)})
+                        </p>
+                      </Stats>
+                      <Stats>
+                        <p>WIS:</p>
+                        <p>
+                          {monster.wisdom} ({calculateModifier(monster.wisdom)})
+                        </p>
+                      </Stats>
+                      <Stats>
+                        <p>CHA:</p>
+                        <p>
+                          {monster.charisma} (
+                          {calculateModifier(monster.charisma)})
+                        </p>
+                      </Stats>
+                    </StatBlocks>
                   </div>
                   <BackButton handleChange={onReturn} />
                 </MonsterSingle>
