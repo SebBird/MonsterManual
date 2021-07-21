@@ -24,6 +24,9 @@ const MonsterContainer = styled.div`
   padding: 1rem;
   margin: 2rem;
   transition: all 0.5s;
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const MonsterList = styled.div`

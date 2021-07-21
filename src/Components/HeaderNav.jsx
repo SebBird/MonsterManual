@@ -5,18 +5,18 @@ import SearchBar from "./SearchBar";
 
 const HeaderDiv = styled.div`
   width: 100%;
-  height: ${(props) => (props.monster ? "20vh" : "100vh")};
+  max-height: ${(props) => (props.monster ? "20vh" : "200vh")};
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding: 0 0 5px 0;
-  transition: height 0.8s;
+  transition: max-height 0.8s, border-bottom 1s;
   border-bottom: ${(props) =>
-    props.monster ? "3px solid black" : "3px solid #fff4de"};
-  background-color: #ffdc99;
+    props.monster ? "3px solid black" : "3px solid #fbe8c6"};
+  background-color: #fbe8c6;
   @media (max-width: 768px) {
-    height: ${(props) => (props.monster ? "30vh" : "100vh")};
+    max-height: ${(props) => (props.monster ? "30vh" : "200vh")};
   } ;
 `;
 

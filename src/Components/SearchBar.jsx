@@ -7,7 +7,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: ${(props) => (props.monster ? "0" : "0 0 4rem 0")};
+  padding: ${(props) => (props.monster ? "0" : "0 0 80vh 0")};
   transition: padding 0.8s;
   @media (max-width: 768px) {
     flex-direction: column;
