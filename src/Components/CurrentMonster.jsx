@@ -101,6 +101,17 @@ const Stats = styled.div`
   }
 `;
 
+const PageIcon = styled.div`
+  height: 8px;
+  width: 8px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-color: #b38d25;
+  filter: opacity(0.5);
+  display: inline-block;
+  transition: transform 0.4s, filter 0.4s;
+`;
+
 const googleImageSearch = (monsterName) => {
   let query = monsterName.replace(" ", "+");
   return `https://www.google.com/search?tbm=isch&q=D%26D+${query}`;
@@ -137,6 +148,26 @@ const CurrentMonster = ({
             <div>
               <Button wording={"Previous"} func={() => changePage("-")} />
               <Button wording={"Next"} func={() => changePage("+")} />
+            </div>
+            <div>
+              {monsterList.map((mon, index) => {
+                if (monsterList.length !== 1) {
+                  if (index + 1 === currentPage) {
+                    return (
+                      <PageIcon
+                        key={index}
+                        style={{
+                          transform: "scale(1.6)",
+                          filter: "opacity(1)",
+                        }}
+                      ></PageIcon>
+                    );
+                  }
+
+                  return <PageIcon key={index}></PageIcon>;
+                }
+                return null;
+              })}
             </div>
           </PageNav>
           {monster.map((mon) => (
