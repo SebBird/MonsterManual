@@ -8,14 +8,10 @@ const HeaderDiv = styled.div`
   justify-content: center;
   align-items: flex-end;
   padding: 1rem;
-  @media (max-width: 768px) {
-    font-size: 0.75rem;
-    padding: 0;
-  } ;
 `;
 
 const Image = styled.img`
-  width: 15%;
+  width: 50px;
   padding: 0 0 0.5rem 0;
 `;
 
